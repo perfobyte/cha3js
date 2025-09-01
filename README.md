@@ -1,6 +1,7 @@
 # cha3js
 
 Implementing high-performance stream cipher in JS based on ChaCha20.
+
 Forked from Mykola Bubelich's repository: https://github.com/thesimj/js-chacha20
 
 
