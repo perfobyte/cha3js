@@ -1,5 +1,5 @@
 {
-  "name": "cha3",
+  "name": "cha3js",
   "version": "1.0.0",
   "description": "Implementing high-performance stream cipher in JS based on ChaCha20. Forked from Mykola Bubelich's repository: https://github.com/thesimj/js-chacha20",
   "main": "i.js",
