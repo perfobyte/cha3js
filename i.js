@@ -1,24 +1,30 @@
-# cha3js
 
-Implementing high-performance stream cipher in JS based on ChaCha20.
-Forked from Mykola Bubelich's repository: https://github.com/thesimj/js-chacha20
+export * from './f/i.js';
 
-
-## Full working example:
-
-
-```js
 import {
     cc20_update,
     cc20_param,
-    cc20_to32,
-    SIGMA,
-    ROUND_DATA,
-} from "cha3js";
+    cc20_to32
+} from './f/i.js';
+
+export var
+    SIGMA = [0x61707865, 0x3320646e, 0x79622d32, 0x6b206574],
+    ROUND_DATA = [
+        [0, 4, 8, 12],
+        [1, 5, 9, 13],
+        [2, 6, 10, 14],
+        [3, 7, 11, 15],
+
+        [0, 5, 10, 15],
+        [1, 6, 11, 12],
+        [2, 7, 8, 13],
+        [3, 4, 9, 14],
+    ]
+;
 
 var
     message_value = `{"hello":"world"}`,
-    key_value = "any_key_value",
+    key_value = "пішов нахуй ",
 
     te = new TextEncoder(),
     td = new TextDecoder(),
@@ -46,18 +52,15 @@ var
     mix = new Uint32Array(param_length)
 ;
 
-console.dir(td.decode(data)); // `{"hello":"world"}`
+console.dir(td.decode(data));
 
-// encoding:
 cc20_update(data, key_stream, byte_counter, rounds, block_size, mix, param_bf, ROUND_DATA);
 
-console.dir(td.decode(data)); // U�+�&@�OɌ���z�
+console.dir(td.decode(data)); // encoded
 
-
-// decoding:
 key_stream.fill(0);
 param_bf.set(param);
+
 cc20_update(data, key_stream, byte_counter, rounds, block_size, mix, param_bf, ROUND_DATA);
 
-console.dir(td.decode(data)); // `{"hello":"world"}`
-```
+console.dir(td.decode(data));

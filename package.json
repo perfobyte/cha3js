@@ -1,0 +1,30 @@
+{
+  "name": "cha3",
+  "version": "1.0.0",
+  "description": "Implementing high-performance stream cipher in JS based on ChaCha20. Forked from Mykola Bubelich's repository: https://github.com/thesimj/js-chacha20",
+  "main": "i.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perfobyte/cha3js.git"
+  },
+  "keywords": [
+    "cipher",
+    "stream",
+    "key",
+    "symmetric",
+    "encryption",
+    "chacha20",
+    "javascript",
+    "high",
+    "performance"
+  ],
+  "author": "https://github.com/perfobyte",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/perfobyte/cha3js/issues"
+  },
+  "homepage": "https://github.com/perfobyte/cha3js#readme"
+}
