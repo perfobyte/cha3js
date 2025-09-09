@@ -10,11 +10,14 @@ Forked from Mykola Bubelich's repository: https://github.com/thesimj/js-chacha20
 
 ```js
 import {
-    cc20_update,
-    cc20_param,
-    cc20_to32,
+    c3_update,
+    c3_param,
+    c3_param_setup,
+    c3_to32,
+    c3_reload,
     SIGMA,
     ROUND_DATA,
+
 } from "cha3js";
 
 var
@@ -34,31 +37,61 @@ var
     byte_counter = 0,
     rounds = 20,
     data = te.encode(message_value),
+    data_length = data.length,
 
     key_stream = new Uint8Array(block_size),
+
+    param_for_any = c3_param_setup(new Uint32Array(param_length),SIGMA,),
 
     param = (
         key.set(te.encode(key_value).subarray(0, 32)),
 
-        cc20_param(key,byte_counter,nonce,SIGMA,cc20_to32)
+        c3_param(
+            param_for_any,
+            key,
+            byte_counter,
+            nonce,
+            c3_to32
+        )
     ),
     param_bf = new Uint32Array(param),
 
-    mix = new Uint32Array(param_length)
+    mix = new Uint32Array(param_length),
+
+    to_string = (data) => td.decode(data),
+
+    from = 0,
+    to = data_length
 ;
 
-console.dir(td.decode(data)); // `{"hello":"world"}`
+console.dir(to_string(data)); // output: `{"hello":"world"}`
 
-// encoding:
-cc20_update(data, key_stream, byte_counter, rounds, block_size, mix, param_bf, ROUND_DATA);
+// [ ENCODING ]:
+console.log(
+    to_string(
+        c3_update(data, from, to, key_stream, byte_counter, rounds, block_size, mix, param_bf, ROUND_DATA)
+    )
+);
+// output: U�+�&@�OɌ���z�
 
-console.dir(td.decode(data)); // U�+�&@�OɌ���z�
 
+// [ DECODING ]:
+console.dir(
+    to_string(
+        c3_update(
+            data,
+            from,
+            to,
+            key_stream,
+            byte_counter,
+            rounds,
+            block_size,
+            mix,
+            c3_reload(param_bf, param),
+            ROUND_DATA
+        )
+    )
+);
+// output: `{"hello":"world"}`
 
-// decoding:
-key_stream.fill(0);
-param_bf.set(param);
-cc20_update(data, key_stream, byte_counter, rounds, block_size, mix, param_bf, ROUND_DATA);
-
-console.dir(td.decode(data)); // `{"hello":"world"}`
 ```

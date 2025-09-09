@@ -1,14 +1,11 @@
 
 // [default]:
 // byte_counter = 0
-// rounds = 20
+// rounds = 20 // must be even
 
 export default (
-    (data, key_stream, byte_counter, rounds, block_size, mix, param, ROUND_DATA) => {
+    (data, I,L, key_stream, byte_counter, rounds, block_size, mix, param, ROUND_DATA) => {
         var
-            I = 0,
-            L = data.length,
-
             i = 0,
             b = 0,
             j = 0,
@@ -20,8 +17,7 @@ export default (
             _c = 0,
             _d = 0,
 
-            D = 0,
-            byte_counter = 0
+            D = 0
         ;
         
         for (; I < L; I++) {
@@ -61,14 +57,13 @@ export default (
                     }
                 }
             
-                i = 0;
+                b = i = 0;
                 for (; i < 16; i++) {
                     key_stream[b++] = (mix[i] += param[i]) & 0xFF;
                     key_stream[b++] = (mix[i] >>> 8) & 0xFF;
                     key_stream[b++] = (mix[i] >>> 16) & 0xFF;
                     key_stream[b++] = (mix[i] >>> 24) & 0xFF;
                 };
-
                 param[12]++;
             };
             
